@@ -4,7 +4,7 @@ set -e o pipefail
 #https://wiki.debian.org/HowToUpgradeKernel
 #5.10.0-15-amd64
 #linux-image-5.10.0-15-amd64
-#echo "deb http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
+echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
 apt update
 apt install -y linux-image-5.10.0-15-amd64 linux-source fakeroot
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
