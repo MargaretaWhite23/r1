@@ -16,6 +16,5 @@ jobs:
           ls ${{ github.workspace }}
         run: |
           source build-kernel-github-actions.sh 
-
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
