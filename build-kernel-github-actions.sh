@@ -1,12 +1,39 @@
 #! /bin/sh
 set -e o pipefail
 
+#https://wiki.debian.org/HowToUpgradeKernel
+#linux-image-5.15.0-33-generic
+#sudo apt install -y linux-image-5.15.0-33-generic linux-source fakeroot kernel-package
+# echo "deb http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
+# apt update
+#https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
+#https://debian-handbook.info/browse/stable/sect.kernel-compilation.html ##advanced docs
+mkdir ~/kernel; cd ~/kernel
+tar -xaf /usr/src/linux-source-4.19.tar.xz
+cp /boot/config-4.19.0-5-amd64 ~/kernel/linux-source-4.19/.config
+make deb-pkg 
+make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
+ls ../*.deb
+
 KERNEL_DIR=$PWD
 TG_BOT_TOKEN=$1
 CHATID=$2
 PREFIX=$3
 
 exports() {
+	git clone https://bitbucket.org/anupritaisno1/aarch64-linux-gnu -b linaro
+	export CROSS_COMPILE=./aarch64-linux-gnu/bin/aarch64-linux-gnu- ;
+export ARCH=amd64;
+export SUBARCH=amd64;
+export KBUILD_BUILD_USER="Suzumiya";
+export KBUILD_BUILD_HOST="The_literary_club";
+STRIP="aarch64-linux-gnu/bin/aarch64-linux-gnu-strip";
+export CCOMPILE=$CROSS_COMPILE;
+export CROSS_COMPILE=aarch64-linux-gnu- ;
+export PATH=$PATH:./aarch64-linux-gnu/bin/ ;
+make haruhi_defconfig;
+make -j$(nproc --all);
+
 	export KBUILD_BUILD_USER="archie"
 	export KBUILD_BUILD_HOST="HyperBeast"
 	export ARCH=arm64
