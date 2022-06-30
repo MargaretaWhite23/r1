@@ -2,117 +2,44 @@
 set -e o pipefail
 
 #https://wiki.debian.org/HowToUpgradeKernel
-#linux-image-5.15.0-33-generic
-#sudo apt install -y linux-image-5.15.0-33-generic linux-source fakeroot kernel-package
-# echo "deb http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
-# apt update
+#5.10.0-15-amd64
+#linux-image-5.10.0-15-amd64
+echo "deb http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
+sudo apt update
+sudo apt install -y linux-image-5.10.0-15-amd64 linux-source fakeroot
+sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
+
+#https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
 #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
 #https://debian-handbook.info/browse/stable/sect.kernel-compilation.html ##advanced docs
 mkdir ~/kernel; cd ~/kernel
-tar -xaf /usr/src/linux-source-4.19.tar.xz
-cp /boot/config-4.19.0-5-amd64 ~/kernel/linux-source-4.19/.config
-make deb-pkg 
-make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
+sed -n '/CONFIG_SYSTEM_TRUSTED_KEYS.*/!p' config-5.10.0-15-amd64 > config-5.10.0-15-amd64
+cp ~/config-5.10.0-15-amd64 ~/kernel/linux-source-5.10/.config
+
+tar -xaf /usr/src/linux-source-5.10.tar.xz
+
+#compile
+cd linux-source-5.10
+make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make -j $(nproc))-1
 ls ../*.deb
 
-KERNEL_DIR=$PWD
-TG_BOT_TOKEN=$1
-CHATID=$2
-PREFIX=$3
-
-exports() {
-	git clone https://bitbucket.org/anupritaisno1/aarch64-linux-gnu -b linaro
-	export CROSS_COMPILE=./aarch64-linux-gnu/bin/aarch64-linux-gnu- ;
-export ARCH=amd64;
-export SUBARCH=amd64;
-export KBUILD_BUILD_USER="Suzumiya";
-export KBUILD_BUILD_HOST="The_literary_club";
-STRIP="aarch64-linux-gnu/bin/aarch64-linux-gnu-strip";
-export CCOMPILE=$CROSS_COMPILE;
-export CROSS_COMPILE=aarch64-linux-gnu- ;
-export PATH=$PATH:./aarch64-linux-gnu/bin/ ;
-make haruhi_defconfig;
-make -j$(nproc --all);
-
-	export KBUILD_BUILD_USER="archie"
-	export KBUILD_BUILD_HOST="HyperBeast"
-	export ARCH=arm64
-	export SUBARCH=arm64
-	export CROSS_COMPILE_ARM32=$KERNEL_DIR/linaro32/bin/armv8l-linux-gnueabihf-
-# 	export KBUILD_COMPILER_STRING=$($KERNEL_DIR/clang-llvm/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
-# 	LD_LIBRARY_PATH=$KERNEL_DIR/clang-llvm/lib64:$LD_LIBRARY_PATH
-# 	export LD_LIBRARY_PATH
-	export CROSS_COMPILE=$KERNEL_DIR/linaro/bin/aarch64-linux-gnu-
-# 	PATH=$KERNEL_DIR/clang-llvm/bin/:$KERNEL_DIR/aarch64-linux-android-4.9/bin/:$PATH
-# 	export PATH
-	export BOT_MSG_URL="https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage"
-	export BOT_BUILD_URL="https://api.telegram.org/bot$TG_BOT_TOKEN/sendDocument"
-	export PROCS=$(nproc --all)
-	DEFCONFIG=chef_defconfig
-}
-
-clone() {
-	echo " "
-	echo "★★Cloning GCC Toolchain from GitHub .."
-	git clone --progress -j32 --depth 1 --no-single-branch https://github.com/archie9211/linaro -b master linaro
-	git clone --progress -j32 --depth 1 --no-single-branch https://github.com/archie9211/linaro -b arm32 linaro32
-
-	echo "★★GCC cloning done"
-	echo ""
-# 	echo "★★Cloning Clang 9 sources"
-# 	wget $CLANG_URL
-# 	mkdir clang-llvm
-# 	tar -C clang-llvm -xvf clang*.tar.gz
-# 	rm -rf clang*.tar.gz
-# 	echo "★★Clang Done, Now Its time for AnyKernel .."
-	git clone --depth 1 --no-single-branch https://github.com/archie9211/AnyKernel2 anykernel
-# 	echo "★★Cloning libufdt"
-# 	git clone https://android.googlesource.com/platform/system/libufdt $KERNEL_DIR/scripts/ufdt/libufdt
-	echo "★★Cloning Kinda Done..!!!"
-}
-
+#tg_post_msg "new build core Count $PROCS Compiler $KBUILD_COMPILER_STRING"
+#BUILD_START=$(date +"%s")
 tg_post_msg() {
-	curl -s -X POST "$BOT_MSG_URL" -d chat_id="$2" \
+	curl -s -X POST "$MSG_URL" -d chat_id="$2" \
 	-d "disable_web_page_preview=true" \
 	-d "parse_mode=html" \
 	-d text="$1"
 
 }
 
-tg_post_build() {
-	curl --progress-bar -F document=@"$1" $BOT_BUILD_URL \
-	-F chat_id="$2"  \
-	-F "disable_web_page_preview=true" \
-	-F "parse_mode=html" \
-	-F caption="$3"  
-}
-
-build_kernel() {
-	make O=out $DEFCONFIG
-	BUILD_START=$(date +"%s")
-	tg_post_msg "<b>NEW CI DarkOne Build Triggered</b>%0A<b>Date : </b><code>$(TZ=Asia/Jakarta date)</code>%0A<b>Device : </b><code>chef</code>%0A<b>Pipeline Host : </b><code>Github Actions</code>%0A<b>Host Core Count : </b><code>$PROCS</code>%0A<b>Compiler Used : </b><code>$KBUILD_COMPILER_STRING</code>" "$CHATID"
-	make -j$PROCS O=out \
-		CROSS_COMPILE=$CROSS_COMPILE \
-		CROSS_COMPILE_ARM32=$CROSS_COMPILE_ARM32 2>&1 | tee error.log
-# 		CC=$CC \
-# 		CLANG_TRIPLE=aarch64-linux-gnu- 2>&1 | tee error.log
-	#make dtbo image
-# 	make O=out dtbo.img
-	BUILD_END=$(date +"%s")
-	DIFF=$((BUILD_END - BUILD_START))
-	check_img
-}
 check_img() {
 	if [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ] 
 	    then
 		gen_zip
-	else
-		tg_post_build "error.log" "$CHATID" "<b>Build failed to compile after $((DIFF / 60)) minute(s) and $((DIFF % 60)) seconds</b>"
 	fi
 }
 gen_zip() {
-# 	mv $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb anykernel/Image.gz-dtb
-# 	mv $KERNEL_DIR/out/arch/arm64/boot/dtbo.img AnyKernel2/dtbo.img
 	cd $KERNEL_DIR/anykernel
 	zip -r9 DarkOne-v3.0-chef-$PREIFIX * -x .git README.md
 	MD5CHECK=$(md5sum $ZIPNAME-$ARG1-$DATE.zip | cut -d' ' -f1)
