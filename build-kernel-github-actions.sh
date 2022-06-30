@@ -5,9 +5,9 @@ set -e o pipefail
 #5.10.0-15-amd64
 #linux-image-5.10.0-15-amd64
 #echo "deb http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
-sudo apt update
-sudo apt install -y linux-image-5.10.0-15-amd64 linux-source fakeroot
-sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
+apt update
+apt install -y linux-image-5.10.0-15-amd64 linux-source fakeroot
+apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
 
 #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
 #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
