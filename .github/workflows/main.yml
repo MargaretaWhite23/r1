@@ -10,11 +10,25 @@ jobs:
         uses: MargaretaWhite23/r1@main
         with:
           who-to-greet: 'Mona the Octocat'
-      - name: Upload artifact
+      - name: Upload artifact1
         uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path: /*.deb
+          path: "linux-image-5.18.5-falcot_5.18.5-1_amd64.deb"
+      - name: Upload artifact2
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: "linux-libc-dev_5.18.5-1_amd64.deb"
+      - name: Upload ar wildcards
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: |
+            /github/workspace/*.deb
+            ~/*.deb
+            /*.deb
+      
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
