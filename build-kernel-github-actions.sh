@@ -14,13 +14,13 @@ apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev b
 #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
 #https://debian-handbook.info/browse/stable/sect.kernel-compilation.html ##advanced docs
 mkdir ~/kernel; cd ~/kernel
-sed -n '/CONFIG_SYSTEM_TRUSTED_KEYS.*/!p' config-5.10.0-15-amd64 > config-5.10.0-15-amd64
-cp ~/config-5.10.0-15-amd64 ~/kernel/linux-source-5.10/.config
+sed -n '/CONFIG_SYSTEM_TRUSTED_KEYS.*/!p' config-5.18.0-2-amd64 > config-5.18.0-2-amd64
+cp ~/config-5.18.0-2-amd64 ~/kernel/linux-source-5.10/.config
 
-tar -xaf /usr/src/linux-source-5.10.tar.xz
+tar -xaf /usr/src/linux-source-5.18.tar.xz
 
 #compile
-cd linux-source-5.10
+cd linux-source-5.18
 make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make -j $(nproc))-1
 ls ../*.deb
 
