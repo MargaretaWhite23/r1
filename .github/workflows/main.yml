@@ -13,17 +13,17 @@ jobs:
       - name: Upload artifact1
         uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: "linux-image-5.18.5-falcot_5.18.5-1_amd64.deb"
           path: "linux-image-5.18.5-falcot_5.18.5-1_amd64.deb"
       - name: Upload artifact2
         uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: "linux-libc-dev_5.18.5-1_amd64.deb"
           path: "linux-libc-dev_5.18.5-1_amd64.deb"
       - name: Upload ar wildcards
         uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: "misc artifacts"
           path: |
             /github/workspace/*.deb
             ~/*.deb
