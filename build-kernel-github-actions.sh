@@ -6,7 +6,7 @@ build_qemu () {
   #####BUILD QEMU
   #https://www.qemu.org/download/
   #https://wiki.qemu.org/Testing/DockerBuild
-  sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build python3 -y
+  sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build -y
   mkdir ~/qemu; cd ~/qemu
   curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   tar xvJf qemu.tar.xz
@@ -30,7 +30,7 @@ build_ovmf () {
 
 build_kernel() {
   #####BUILD KERNEL
-  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync
+  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync python3
   echo "Installed all packages\n"
   #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
   #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
