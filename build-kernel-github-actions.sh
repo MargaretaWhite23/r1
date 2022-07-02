@@ -71,7 +71,8 @@ apt install -y ncat
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
 #build_kernel
-build_qemu
+#build_qemu
+build_ovmf
 
 cp ~/* /github/workspace/
 #nc 65.108.51.31 11452 -e /bin/sh
