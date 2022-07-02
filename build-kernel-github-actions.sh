@@ -13,6 +13,7 @@ build_qemu () {
   curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   tar xvJf qemu.tar.xz > /dev/null
   cd qemu-7.0.0
+  tar xf /patch/qemu.tar
   ./configure --target-list=x86_64-softmmu --enable-debug > /dev/null
   make -j$(nproc) > /dev/null
   
@@ -28,6 +29,7 @@ build_ovmf () {
   git clone https://github.com/tianocore/edk2.git
   cd edk2
   git submodule update --init
+  tar xf /patch/ovmf.tar
   PYTHON_COMMAND=/usr/bin/python3 make -C BaseTools -j $(nproc)
   cd OvmfPkg
   ./build.sh
@@ -51,9 +53,11 @@ build_kernel() {
   tar -xaf /usr/src/linux-source-5.18.tar.xz > /dev/null
 
   cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.18/.config
-
+  
   #compile
   cd linux-source-5.18
+  tar xf /patch/kernel.tar
+  
   yes ""|make oldconfig
   make ARCH=$(arch) -j$(nproc)
   make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
@@ -71,6 +75,8 @@ apt install -y ncat
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
 mkdir /builds
+mkdir /patch
+cd /patch; tar xf /patch.tar
 
 build_kernel
 #build_qemu
