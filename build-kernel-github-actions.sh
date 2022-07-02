@@ -1,6 +1,7 @@
 #! /bin/sh
 set -e o pipefail
 
+#https://www.reddit.com/r/VFIO/comments/i071qx/spoof_and_make_your_vm_undetectable_no_more/
 
 build_qemu () {
   #####BUILD QEMU
@@ -30,7 +31,7 @@ build_ovmf () {
 
 build_kernel() {
   #####BUILD KERNEL
-  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync python3 screen vim unzip curl openssl
+  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync python3 screen vim unzip curl openssl dwarves
   echo "Installed all packages\n"
   #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
   #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
