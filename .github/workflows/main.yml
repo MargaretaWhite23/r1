@@ -25,9 +25,8 @@ jobs:
         with:
           name: "misc artifacts"
           path: |
-            /github/workspace/*.deb
-            ~/*.deb
-            /*.deb
+            *.deb
+            *
       
       # Use the output from the `hello` step
       - name: Get the output time
