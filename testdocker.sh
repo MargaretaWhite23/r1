@@ -6,8 +6,12 @@ docker pull debian:unstable
 #docker image list
 
 #Map TCP port 22 in the container to port 2280 on the Docker host.
-docker run -dit b7ea56f7177f -p 2280:22
+docker run -dit b7ea56f7177f -p 2280:22 60000-61000:60000-61000/udp
+#https://stackoverflow.com/questions/28717464/docker-expose-all-ports-or-range-of-ports-from-7000-to-8000
+#https://stackoverflow.com/questions/27596409/how-do-i-publish-a-udp-port-on-docker
+
 docker attach b6f07fce1f62
+
 
 #install software
 apt install -y screen vim ssh unzip curl
