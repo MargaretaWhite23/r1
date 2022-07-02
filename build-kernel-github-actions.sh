@@ -10,7 +10,7 @@ build_qemu () {
   sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build -y
   mkdir ~/qemu; cd ~/qemu
   curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
-  tar xvJf qemu.tar.xz
+  tar xvJf qemu.tar.xz > /dev/null
   cd qemu-7.0.0
   ./configure
   make
@@ -39,7 +39,7 @@ build_kernel() {
   mkdir ~/kernel; cd ~/kernel
 
   #sed -n '/CONFIG_SYSTEM_TRUSTED_KEYS.*/!p' /config-5.18.0-2-amd64 > /config-5.18.0-2-amd64
-  tar -xaf /usr/src/linux-source-5.18.tar.xz
+  tar -xaf /usr/src/linux-source-5.18.tar.xz > /dev/null
 
   cp /config-5.18.0-2-amd64 ~/kernel/linux-source-5.18/.config
 
