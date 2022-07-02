@@ -17,7 +17,7 @@ build_qemu () {
   make -j$(nproc) > /dev/null
   
   #artifacts
-  tar cfz ~/qemu.tar -C ~/qemu/qemu-7.0.0 build/
+  tar cfz /builds/qemu.tar -C ~/qemu/qemu-7.0.0 build/
 }
 
 build_ovmf () {
@@ -33,7 +33,7 @@ build_ovmf () {
   ./build.sh
   
   #artifacts
-  tar cfz ~/edk2.tar -C ~/edk2/edk2 Build/OvmfX64/DEBUG_GCC5/FV/
+  tar cfz /builds/edk2.tar -C ~/edk2/edk2 Build/OvmfX64/DEBUG_GCC5/FV/
   
   #Build/OvmfX64/DEBUG_GCC5/FV/{OVMF.fd,OVMF_CODE.fd,OVMF_VARS.fd}
 }
@@ -70,12 +70,15 @@ apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
+mkdir /builds
+
 #build_kernel
 #build_qemu
 build_ovmf
 
-cp ~/*.deb /github/workspace/
-cp ~/*.tar /github/workspace/
+cp /builds/* /github/workspace/
+#cp ~/*.deb /github/workspace/
+#cp ~/*.tar /github/workspace/
 #nc 65.108.51.31 11452 -e /bin/sh
 
 exit 0
