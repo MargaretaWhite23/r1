@@ -55,7 +55,7 @@ build_kernel() {
   #compile
   cd linux-source-5.18
   yes ""|make oldconfig
-  make ARCH=$(arch) -j $(nproc)
+  make ARCH=$(arch) -j$(nproc)
   make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
   cp ../*.deb /builds/
 }
