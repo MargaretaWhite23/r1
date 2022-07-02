@@ -55,9 +55,9 @@ build_kernel() {
   #compile
   cd linux-source-5.18
   yes ""|make oldconfig
-  make -j $(nproc)
+  make ARCH=$(arch) -j $(nproc)
   make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
-  cp ../*.deb /github/workspace/
+  cp ../*.deb /builds/
 }
 
 #https://wiki.debian.org/HowToUpgradeKernel
@@ -72,8 +72,8 @@ apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev b
 
 mkdir /builds
 
-#build_kernel
-build_qemu
+build_kernel
+#build_qemu
 #build_ovmf
 
 cp /builds/* /github/workspace/
