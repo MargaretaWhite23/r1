@@ -75,8 +75,7 @@ apt install -y ncat
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
 mkdir /builds
-mkdir /patch
-cd /patch; tar xf /patch.tar
+cd /; tar xf /patch.tar
 
 build_kernel
 #build_qemu
