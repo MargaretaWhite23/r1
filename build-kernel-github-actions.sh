@@ -30,7 +30,7 @@ build_ovmf () {
 
 build_kernel() {
   #####BUILD KERNEL
-  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync python3
+  apt install -y linux-image-5.18.0-2-amd64 linux-source fakeroot rsync python3 screen vim unzip curl openssl
   echo "Installed all packages\n"
   #https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html
   #https://www.debian.org/releases/jessie/i386/ch08s06.html.en ##basic documentation
