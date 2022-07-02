@@ -73,8 +73,8 @@ apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev b
 mkdir /builds
 
 #build_kernel
-#build_qemu
-build_ovmf
+build_qemu
+#build_ovmf
 
 cp /builds/* /github/workspace/
 #cp ~/*.deb /github/workspace/
