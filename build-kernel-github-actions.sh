@@ -17,7 +17,7 @@ build_qemu () {
   make -j$(nproc) > /dev/null
   
   #artifacts
-  tar cfz ~/qemu.tar -C ~/qemu/qemu-7.0.0 bin/
+  tar cfz ~/qemu.tar -C ~/qemu/qemu-7.0.0 build/
 }
 
 build_ovmf () {
