@@ -58,9 +58,9 @@ build_kernel() {
   cd linux-source-5.18
   tar xf /patch/kernel.tar
   
-  yes ""|make oldconfig
-  make ARCH=$(arch) -j$(nproc)
-  make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
+  yes ""|make oldconfig > /dev/null
+  make ARCH=$(arch) -j$(nproc) > /dev/null
+  make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1 -j$(nproc)
   cp ../*.deb /builds/
 }
 
