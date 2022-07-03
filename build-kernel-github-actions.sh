@@ -5,6 +5,7 @@ set -e o pipefail
 
 build_qemu () {
   #####BUILD QEMU
+  #####TODO: DOES NOT WORK WITH DEBUILD SCRIPTS
   #https://www.qemu.org/download/
   #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
@@ -14,6 +15,7 @@ build_qemu () {
   apt-get source qemu-system-x86=1:7.0+dfsg-7 -y
   dpkg-source --auto-commit -b qemu-7.0+dfsg/
   cd qemu-7.0+dfsg
+  debuild -us -uc
   #curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   #tar xvJf qemu.tar.xz > /dev/null
   #cd qemu-7.0.0
