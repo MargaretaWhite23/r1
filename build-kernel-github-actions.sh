@@ -6,6 +6,7 @@ set -e o pipefail
 build_qemu () {
   #####BUILD QEMU
   #####TODO: DOES NOT WORK WITH DEBUILD SCRIPTS
+  #####.DEB FILES GENERATED NEED TO BE STORED IN A LOCAL APT REPO AND INSTALLED USING APT NOT DPKG -I TO AVOID ERRORS
   #https://www.qemu.org/download/
   #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
