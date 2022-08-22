@@ -36,7 +36,7 @@ build_qemu () {
   make -j$(nproc) > /dev/null
   
   #artifacts
-  tar cfz /builds/qemu.tar -C ~/qemu/qemu-7.0.0 build/
+  tar cfz /builds/qemu.tar -C ~/qemu/qemu-7.0+dfsg build/
 }
 
 build_ovmf () {
