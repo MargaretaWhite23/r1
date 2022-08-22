@@ -1,7 +1,7 @@
 #! /bin/sh
 set -e o pipefail
  
-
+ 
 #https://www.reddit.com/r/VFIO/comments/i071qx/spoof_and_make_your_vm_undetectable_no_more/
 
 build_qemu () {
