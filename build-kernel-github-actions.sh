@@ -22,7 +22,7 @@ build_qemu () {
   #tar xvJf qemu.tar.xz > /dev/null
   #cd qemu-7.0.0
   tar xf /patch/qemu.tar
-  ./configure --target-list=x86_64-softmmu --enable-debug > /dev/null
+  ./configure --target-list=x86_64-softmmu --enable-debug --enable-spice > /dev/null
   make -j$(nproc) > /dev/null
   
   #artifacts
