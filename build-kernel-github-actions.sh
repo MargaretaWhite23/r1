@@ -99,7 +99,7 @@ cd /; tar xf /patch.tar
 
 #build_kernel
 build_qemu
-build_ovmf
+#build_ovmf
 
 cp /builds/* /github/workspace/
 #cp ~/*.deb /github/workspace/
