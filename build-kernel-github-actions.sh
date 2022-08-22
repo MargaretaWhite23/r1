@@ -12,7 +12,7 @@ build_qemu () {
   #https://wiki.qemu.org/Hosts/Linux
   #https://wiki.qemu.org/Testing/DockerBuild
   
-  DEBIAN_FRONTEND=noninteractive apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid devscripts build-essential lintian -y
+  DEBIAN_FRONTEND=noninteractive apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build uuid-dev uuid devscripts build-essential lintian equivs -y
   #nc 103.158.223.61 21121 -e /bin/sh
   DEBIAN_FRONTEND=noninteractive apt-get install -y gir1.2-spiceclientgtk-3.0 virt-manager libvirt-daemon virt-viewer spice-vdagent qemu-utils  spice-vdagent xserver-xorg-video-qxl
   mkdir ~/qemu; cd ~/qemu
@@ -24,14 +24,14 @@ build_qemu () {
   #nc 103.158.223.61 21121 -e /bin/sh
   yes|mk-build-deps -i
   cd .. 
-  dpkg-source --auto-commit -b qemu-7.0+dfsg/
+  #dpkg-source --auto-commit -b qemu-7.0+dfsg/
   cd qemu-7.0+dfsg
   #mk-build-deps --install --root-cmd sudo --remove
-  yes|debuild -us -uc
+  #yes|debuild -us -uc
   #curl -L https://download.qemu.org/qemu-7.0.0.tar.xz -o qemu.tar.xz
   #tar xvJf qemu.tar.xz > /dev/null
   #cd qemu-7.0.0
-  tar xf /patch/qemu.tar
+  #tar xf /patch/qemu.tar
   ./configure --target-list=x86_64-softmmu --enable-debug --enable-spice > /dev/null
   make -j$(nproc) > /dev/null
   
